@@ -1,17 +1,22 @@
 {
   "cardDatas": [
     {
-      "id": "0",
-      "name": "test",
+      "id": "100000000",
+      "unitName": "test",
       "cost": "1",
       "unitType": "Air",
       "attackType": "Melee",
-      "attackTarget": "Ground",
+      "attackAbleTypes": [
+        "Ground",
+        "Air",
+        "Building"
+      ],
       "range": "1",
       "attackDelay": "1",
       "damage": "1",
       "hp": "10",
-      "speed": "Slow",
+      "speedType": "Slow",
+      "spawnDleay": "1",
       "spawnCount": "1",
       "prefabName": "test",
       "iconPath": "none",
@@ -19,42 +24,44 @@
       "lifeTime": "100"
     },
     {
-      "id": "1",
-      "name": "Warrior",
+      "id": "100000001",
+      "unitName": "Warrior",
       "cost": "2",
       "unitType": "Ground",
       "attackType": "Melee",
-      "attackTarget": [
+      "attackAbleTypes": [
         "Ground",
         "Building"
       ],
       "range": "2",
       "attackDelay": "1",
-      "damage": "5",
-      "hp": "50",
-      "speed": "Fast",
-      "spawnCount": "2",
+      "damage": "40",
+      "hp": "200",
+      "speedType": "Fast",
+      "spawnDleay": "1",
+      "spawnCount": "3",
       "prefabName": "Warrior",
       "iconPath": "none",
       "description\t": "WarriorData",
       "lifeTime": "0"
     },
     {
-      "id": "2",
-      "name": "Hunter",
+      "id": "100000002",
+      "unitName": "Hunter",
       "cost": "2",
       "unitType": "Ground",
       "attackType": "Range",
-      "attackTarget": [
+      "attackAbleTypes": [
         "Air",
         "Ground",
         "Building"
       ],
       "range": "7",
       "attackDelay": "2",
-      "damage": "8",
-      "hp": "30",
-      "speed": "Medium",
+      "damage": "60",
+      "hp": "100",
+      "speedType": "Medium",
+      "spawnDleay": "1",
       "spawnCount": "2",
       "prefabName": "Hunter",
       "iconPath": "none",
@@ -62,17 +69,44 @@
       "lifeTime": "0"
     },
     {
-      "id": "3",
-      "name": "Tower",
+      "id": "100000003",
+      "unitName": "BabyDragon",
+      "cost": "3",
+      "unitType": "Air",
+      "attackType": "Splash",
+      "attackAbleTypes": [
+        "Ground",
+        "Air",
+        "Building"
+      ],
+      "range": "5",
+      "attackDelay": "5",
+      "damage": "80",
+      "hp": "300",
+      "speedType": "Medium",
+      "spawnDleay": "1.5",
+      "spawnCount": "1",
+      "prefabName": "BabyDragon",
+      "iconPath": "none",
+      "description\t": "BabyDragonData",
+      "lifeTime": "0"
+    },
+    {
+      "id": "100000004",
+      "unitName": "Tower",
       "cost": "5",
       "unitType": "Building",
       "attackType": "Splash",
-      "attackTarget": "Ground",
+      "attackAbleTypes": [
+        "Ground",
+        "Building"
+      ],
       "range": "10",
       "attackDelay": "5",
-      "damage": "12",
+      "damage": "100",
       "hp": "100",
-      "speed": "Slow",
+      "speedType": "Slow",
+      "spawnDleay": "0",
       "spawnCount": "5",
       "prefabName": "Tower",
       "iconPath": "none",
@@ -80,20 +114,21 @@
       "lifeTime": "0"
     },
     {
-      "id": "4",
-      "name": "DragonBreath",
+      "id": "100000005",
+      "unitName": "DragonBreath",
       "cost": "10",
       "unitType": "Spell",
       "attackType": "Area",
-      "attackTarget": [
+      "attackAbleTypes": [
         "Ground",
         "Building"
       ],
       "range": "20",
       "attackDelay": "999",
-      "damage": "2",
+      "damage": "10",
       "hp": "0",
-      "speed": "Fast",
+      "speedType": "Fast",
+      "spawnDleay": "3",
       "spawnCount": "10",
       "prefabName": "DragonBreath",
       "iconPath": "none",
