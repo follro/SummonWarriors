@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Unit
 {
+    //이걸 Unit이 가지고 가야됨
     public class UnitData
     {
         public int Id { get; private set; }

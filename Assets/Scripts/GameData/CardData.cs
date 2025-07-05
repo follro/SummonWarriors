@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace GameData
 {
+    
     [System.Serializable]
     public class CardData
     {
