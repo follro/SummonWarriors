@@ -70,4 +70,12 @@ namespace GameData
         End
     }
 
+    public enum UnitBehaviorStateType
+    {
+        None = 0,
+        Move,
+        Attack,
+        Dead,
+        End
+    }
 }
