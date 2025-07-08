@@ -17,33 +17,25 @@ namespace Unit.Behavior
             unitBehaviorStates = new UnitBehaviorState[endIndex];
             for (int i = 0; i < endIndex; i++)
             {
-                //일단은 MovementState만 넣음 생성관련 함수 만들어줘야됨
-                unitBehaviorStates[i] = new MovementState(unit);    
+                switch(i)
+                {
+                    case (int)GameData.UnitBehaviorStateType.Move:
+                        unitBehaviorStates[i] = new MovementState(unit);
+                        break;
+                    case (int)GameData.UnitBehaviorStateType.Attack:
+                        unitBehaviorStates[i] = new AttackState(unit);
+                        break;
+                    case (int)GameData.UnitBehaviorStateType.Dead:
+                        unitBehaviorStates[i] = new DeadState(unit); 
+                        break;
+                    default:
+                        unitBehaviorStates[i] = null;
+                        break;
+                }
             }
-        }
-        
-        private IState StateTypeToState(GameData.UnitBehaviorStateType stateType)
-        {
-            IState state = CurrentState;
 
-            //Enum에 따른 State 업데이트 넣어줘야됨
-            switch (stateType)
-            {
-                case GameData.UnitBehaviorStateType.Move:
-                    if (unitBehaviorStates[(int)stateType] == null)
-                        state = new MovementState(); // 중간에 하다맘
-                    break;
-                case GameData.UnitBehaviorStateType.Attack:
-                    break;
-                case GameData.UnitBehaviorStateType.Dead:
-                    break;
-                default:
-                    state = null; //일단은  NULL 나중에 기본 상태 넣어줘야됨
-                    break;
-            }
-            return state;
+            Initialize(GameData.UnitBehaviorStateType.Move);
         }
-
         public void Initialize(GameData.UnitBehaviorStateType startingStateType)
         {
             IState startingState = StateTypeToState(startingStateType);
@@ -53,6 +45,15 @@ namespace Unit.Behavior
                 CurrentState = startingState;
                 startingState.Enter();
             }
+        }
+
+        private IState StateTypeToState(GameData.UnitBehaviorStateType stateType, Unit unit = null)
+        {
+            IState state = null;
+            if (unitBehaviorStates[(int)stateType] != null)
+                state = unitBehaviorStates[(int)stateType];
+
+            return state;
         }
 
         public void TransitionTo(GameData.UnitBehaviorStateType nextStateType)
@@ -66,13 +67,11 @@ namespace Unit.Behavior
                 nextState.Enter();
             }
         }
-
         public void Update()
         {
             if(CurrentState != null) 
                 CurrentState.Update();  
         }
-
         public void FixedUpdate()
         {
             if (CurrentState != null)

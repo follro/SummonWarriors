@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Unit.Behavior
 {
-    public class MovementState : UnitBehaviorState
+    public class DeadState : UnitBehaviorState
     {
-        public MovementState(Unit unit) : base(unit)
+        public DeadState(Unit unit) : base(unit)
         {
         }
 

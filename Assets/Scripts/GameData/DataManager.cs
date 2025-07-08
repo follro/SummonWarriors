@@ -8,6 +8,9 @@ public class DataManager : Singleton<DataManager>
 {
     private TextAsset jsonGameDatas;
     private GameDataContainer gameDataContainer;
+    [SerializeField]
+    private Unit.Unit testUnit;
+
     private void Awake()
     {
         PreserveSingleton();
@@ -25,9 +28,19 @@ public class DataManager : Singleton<DataManager>
         }
         else
             Debug.Log("init Error");
+    }
+
+    private void Start()
+    {
+        //임시 유닛 생성 테스트
+        foreach (var curCardData in gameDataContainer.cardDatas)
+        {
+            Unit.Unit unit = Instantiate(testUnit);
+            unit.UnitStatus = new Unit.UnitData(curCardData);
+            unit.gameObject.name = curCardData.unitName;
+        }
 
     }
+
+
 }
-
-
-

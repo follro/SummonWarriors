@@ -6,10 +6,10 @@ namespace Unit.Behavior
 {
     public abstract class UnitBehaviorState : IState
     {
-        protected Unit unit;
+        protected Unit OwningUnit { get; private set; }
         public UnitBehaviorState(Unit unit)
         {
-            this.unit = unit;
+            this.OwningUnit = unit;
         }
 
         public abstract void Enter();
