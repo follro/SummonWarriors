@@ -18,7 +18,7 @@ namespace GameData
         public static T ParseEnum<T>(string[] strings) where T : Enum
         {
             if (!typeof(T).IsDefined(typeof(FlagsAttribute), inherit: false))
-                throw new InvalidOperationException($"Type '{typeof(T).Name}' is not a Flags enum.");
+                throw new InvalidOperationException($"{typeof(EnumUtil).Name}: Type '{typeof(T).Name}' is not a Flags enum.");
 
             int combinedValue = 0;
 

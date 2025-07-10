@@ -15,9 +15,9 @@ public class ObjectPool<T> where T : MonoBehaviour
     public ObjectPool(T poolingTargetPrefab, Transform factory, int poolInitialSize)
     {
         if (poolingTargetPrefab == null)
-            throw new System.ArgumentNullException(nameof(poolingTargetPrefab), "프리팹은 null일 수 없습니다");
+            throw new System.ArgumentNullException(nameof(poolingTargetPrefab), $"{typeof(ObjectPool<T>).Name}: 프리팹은 null일 수 없습니다");
         if (factory == null)
-            Debug.LogError($"ObjectPool: 초기 오브젝트가 생성될 Pool의 부모 facotry를 상속 받는 Transform이 null 입니다");
+            Debug.LogError($"{typeof(ObjectPool<T>).Name}: 초기 오브젝트가 생성될 Pool의 부모 facotry를 상속 받는 Transform이 null 입니다");
 
         pool = new Queue<T>();
         prefab = poolingTargetPrefab;
@@ -30,14 +30,14 @@ public class ObjectPool<T> where T : MonoBehaviour
             poolInitialSize = 0;
 
         if (!CreateObject(poolInitialSize))
-            Debug.LogError($"ObjectPool: 초기 오브젝트 ({poolInitialSize}개) 생성에 실패했습니다. 풀이 비정상적으로 초기화될 수 있습니다.");
+            Debug.LogError($"{typeof(ObjectPool<T>).Name}: 초기 오브젝트 ({poolInitialSize}개) 생성에 실패했습니다. 풀이 비정상적으로 초기화될 수 있습니다.");
     }
 
     private bool CreateObject(int count)
     {
         if (count <= 0)
         {
-            Debug.LogWarning($"ObjectPool: 생성할 오브젝트 개수가 0이하여서 아무것도 생성하지 않습니다. (Count: {count})");
+            Debug.LogWarning($"{typeof(ObjectPool<T>).Name}: 생성할 오브젝트 개수가 0이하여서 아무것도 생성하지 않습니다. (Count: {count})");
             return false;
         }
         for (int i = 0; i < count; i++)
@@ -62,11 +62,11 @@ public class ObjectPool<T> where T : MonoBehaviour
         else
         {
             int expansionAmount = Mathf.Max(TotalPoolCapacity / ExpansionDivisor, MinimumExpansionAmount);
-            Debug.LogWarning($"풀({prefab.name})이 비었습니다. 현재 총 용량: {TotalPoolCapacity}. {expansionAmount}개의 새 인스턴스를 추가로 생성합니다.");
+            Debug.LogWarning($"{typeof(ObjectPool<T>).Name}: 풀({prefab.name})이 비었습니다. 현재 총 용량: {TotalPoolCapacity}. {expansionAmount}개의 새 인스턴스를 추가로 생성합니다.");
 
             if (!CreateObject(expansionAmount))
             {
-                Debug.LogError($"ObjectPool: 오브젝트 ({expansionAmount}개) 확장 생성에 실패했습니다. 오브젝트를 가져올 수 없습니다.");
+                Debug.LogError($"{typeof(ObjectPool<T>).Name}: 오브젝트 ({expansionAmount}개) 확장 생성에 실패했습니다. 오브젝트를 가져올 수 없습니다.");
                 return null;
             }
             if (pool.TryDequeue(out obj))
@@ -79,7 +79,7 @@ public class ObjectPool<T> where T : MonoBehaviour
     {
         if (obj == null)
         {
-            Debug.LogWarning("null 오브젝트를 풀에 반환하려 했습니다.");
+            Debug.LogWarning($"{typeof(ObjectPool<T>).Name}: null 오브젝트를 풀에 반환하려 했습니다.");
             return;
         }
 

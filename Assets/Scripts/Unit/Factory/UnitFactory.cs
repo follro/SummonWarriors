@@ -26,7 +26,7 @@ namespace Unit.Spawning
         {
             if (unitPoolsById.ContainsKey(cardData.id))
             {
-                Debug.LogWarning($"{this.GetType().Name}의 Pool은 이미 존재합니다.");
+                Debug.LogWarning($"{typeof(UnitFactory).Name}: {this.GetType().Name}의 Pool은 이미 존재합니다.");
                 return;
             }
             string path = $"Units/{cardData.prefabName}";
