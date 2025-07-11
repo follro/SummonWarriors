@@ -15,14 +15,14 @@ public class ObjectPool<T> where T : MonoBehaviour
     public ObjectPool(T poolingTargetPrefab, Transform factory, int poolInitialSize)
     {
         if (poolingTargetPrefab == null)
-            throw new System.ArgumentNullException(nameof(poolingTargetPrefab), $"{typeof(ObjectPool<T>).Name}: 프리팹은 null일 수 없습니다");
+            throw new System.ArgumentNullException(nameof(poolingTargetPrefab), $"{typeof(ObjectPool<T>).Name}, {poolingTargetPrefab.name}: 프리팹은 null일 수 없습니다");
         if (factory == null)
             Debug.LogError($"{typeof(ObjectPool<T>).Name}: 초기 오브젝트가 생성될 Pool의 부모 facotry를 상속 받는 Transform이 null 입니다");
 
         pool = new Queue<T>();
         prefab = poolingTargetPrefab;
         TotalPoolCapacity = 0;
-        poolParent = new GameObject($"{typeof(T).Name}Pool").transform;
+        poolParent = new GameObject($"{typeof(T).Name}Pool: {poolingTargetPrefab.name}").transform;
         
         if(factory != null)
             poolParent.SetParent(factory);

@@ -1,28 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+    using Cysharp.Threading.Tasks;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
 
 
-public class AssetLoadManager : Singleton<AssetLoadManager>
-{
-    [SerializeField]
-    private IAssetLoader assetLoader;
-
-    private void Awake()
+    public class AssetLoadManager : Singleton<AssetLoadManager>
     {
-        PreserveSingleton();
+        private IAssetLoader assetLoader = null;   
 
-        if(assetLoader != null) 
-            assetLoader = new ResourcesAssetLoader();
-    }
+        private void Awake()
+        {
+            PreserveSingleton();
 
-    private T LoadAsset<T>(string path) where T : Object
-    {
-        return assetLoader.LoadAsset<T>(path);
-    }
+            if(assetLoader == null) 
+                assetLoader = new ResourcesAssetLoader();
+        }
 
-    private T LoadAssetAsync<T>(string path) where T : Object
-    {
-        return assetLoader.LoadAssetAsync<T>(path);    
+        public T LoadAsset<T>(string path) where T : Object
+        {
+            return assetLoader.LoadAsset<T>(path);
+        }
+
+        public async UniTask<T> LoadAssetAsync<T>(string path) where T : Object
+        {
+            if (assetLoader == null)
+                return null;
+
+            return await assetLoader.LoadAssetAsync<T>(path);    
+        }
     }
-}

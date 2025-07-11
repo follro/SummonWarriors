@@ -14,9 +14,9 @@ public class ResourcesAssetLoader : IAssetLoader
     {
         ResourceRequest request = Resources.LoadAsync<T>(path);
         await request.ToUniTask();
-        T loadedAsset = request as T;
+        T loadedAsset = request.asset as T;
 
-        if (loadedAsset != null)
+        if (loadedAsset == null)
             Debug.LogError($"{typeof(ResourcesAssetLoader).Name}: '{path}'에서 {typeof(T).Name}타입의 에셋을 로드할 수 없었습니다.");
 
         return loadedAsset;
