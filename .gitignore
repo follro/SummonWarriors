@@ -52,7 +52,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
-
+W
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
@@ -83,3 +83,6 @@ crashlytics-build.properties
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+
+# 테스트용 에셋 폴더 제외
+Assets/TestAssets/
