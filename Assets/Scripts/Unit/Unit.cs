@@ -15,7 +15,7 @@ namespace Unit
         #region Unity Lifecycle Methods
         private void Awake()
         {
-            Initialize();   
+            Initialize();
         }
         private void Start()
         {
@@ -33,7 +33,7 @@ namespace Unit
         
         public void Initialize()
         {
-
+            stateMachine = new UnitBehaviorStateMachine(this);
         }
     }
 }
