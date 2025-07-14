@@ -2,6 +2,7 @@ using GameData;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static AssetLoadManager;
 
 namespace Unit.Spawning
 {
@@ -20,15 +21,15 @@ namespace Unit.Spawning
 
         private void Start()
         {
-            //데이터 매니저에게 현재 플레이어가 가진 덱 데이터를 불러들인다(현재는 임시로 모든 데이터를 불러들임)
-            List<CardData> cardDatas = GameDataManager.Instance.GameDatas.cardDatas;
-            foreach (CardData cardData in cardDatas)
+            //임시로 양 플레이어 덱에 든거 생성해놓기
+            foreach (CardData cardData in GameDataManager.Instance.PlayersDeckData)
             {
-                Unit unit = AssetLoadManager.Instance.LoadAsset<Unit>($"{UnitPath}/{cardData.prefabName}").GetComponent<Unit>();
+                Unit unit = AssetLoadManager.Instance.LoadAsset<Unit>(AssetLoadMode.Resources, $"{UnitPath}/{cardData.prefabName}").GetComponent<Unit>();
                 ObjectPool<Unit> unitPool = new ObjectPool<Unit>(unit, this.transform, TempObejctPoolSize);
                 unitPoolsById.Add(cardData.id, unitPool);
             }
-            foreach (CardData cardData in GameDataManager.Instance.GameDatas.cardDatas)
+
+            foreach (CardData cardData in GameDataManager.Instance.PlayersDeckData)
                 AddUnitPools(cardData); 
         }
 
@@ -40,7 +41,7 @@ namespace Unit.Spawning
                 return;
             }
             string path = $"Units/{cardData.prefabName}";
-            Unit unit = AssetLoadManager.Instance.LoadAsset<Unit>(path);
+            Unit unit = AssetLoadManager.Instance.LoadAsset<Unit>(AssetLoadMode.Resources, path);
             unit.UnitStatus = new UnitData(cardData);
 
             unitPoolsById.Add(unit.UnitStatus.Id, new ObjectPool<Unit>(unit, this.transform, TempObejctPoolSize)); // 임시 오브젝트 풀

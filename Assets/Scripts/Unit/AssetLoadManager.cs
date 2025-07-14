@@ -4,28 +4,45 @@
     using UnityEngine;
 
 
-    public class AssetLoadManager : Singleton<AssetLoadManager>
+public class AssetLoadManager : Singleton<AssetLoadManager>
+{
+    public enum AssetLoadMode
     {
-        private IAssetLoader assetLoader = null;   
+        Resources,
+        AssetBundle,
+        Addressables,
+        External,
+        End
+    }
 
-        private void Awake()
+    private IAssetLoader[] assetLoader;
+    
+    private void Awake()
+    {
+        PreserveSingleton();
+
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        assetLoader = new IAssetLoader[(int)AssetLoadMode.End];
+        for (int i = 0; i < (int)AssetLoadMode.End; i++)
         {
-            PreserveSingleton();
-
-            if(assetLoader == null) 
-                assetLoader = new ResourcesAssetLoader();
-        }
-
-        public T LoadAsset<T>(string path) where T : Object
-        {
-            return assetLoader.LoadAsset<T>(path);
-        }
-
-        public async UniTask<T> LoadAssetAsync<T>(string path) where T : Object
-        {
-            if (assetLoader == null)
-                return null;
-
-            return await assetLoader.LoadAssetAsync<T>(path);    
+            //임시로 리솔시스 에셋로더를 넣어놓는다
+            assetLoader[i] = new ResourcesAssetLoader();
         }
     }
+
+    public T LoadAsset<T>(AssetLoadMode assetLoadMode, string path) where T : Object
+    {
+        return assetLoader[(int)assetLoadMode].LoadAsset<T>(path);
+    }
+
+    public async UniTask<T> LoadAssetAsync<T>(AssetLoadMode assetLoadMode, string path) where T : Object
+    {
+        if (assetLoader[(int)assetLoadMode] == null)
+            return null;
+        return await assetLoader[(int)assetLoadMode].LoadAssetAsync<T>(path);    
+    }
+}
