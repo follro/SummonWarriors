@@ -8,7 +8,7 @@ namespace Unit.Spawning
 {
     public class UnitFactory : Factory
     {
-        private const string UnitPath = "Prefabs/Unit";
+        private const string UnitPath = "Prefabs/Units";
         private const int TempObejctPoolSize = 10; 
         //id에 따른 유닛들 별 풀을 만들어 놓는게 맞겠지?
         private Dictionary<int, ObjectPool<Unit>> unitPoolsById;
@@ -24,6 +24,7 @@ namespace Unit.Spawning
             //임시로 양 플레이어 덱에 든거 생성해놓기
             foreach (CardData cardData in GameDataManager.Instance.PlayersDeckData)
             {
+                Debug.Log($"{UnitPath}/{cardData.prefabName}");
                 Unit unit = AssetLoadManager.Instance.LoadAsset<Unit>(AssetLoadMode.Resources, $"{UnitPath}/{cardData.prefabName}").GetComponent<Unit>();
                 ObjectPool<Unit> unitPool = new ObjectPool<Unit>(unit, this.transform, TempObejctPoolSize);
                 unitPoolsById.Add(cardData.id, unitPool);
@@ -37,9 +38,10 @@ namespace Unit.Spawning
         {
             if (unitPoolsById.ContainsKey(cardData.id))
             {
-                Debug.LogWarning($"{typeof(UnitFactory).Name}: {this.GetType().Name}의 Pool은 이미 존재합니다.");
+                Debug.LogWarning($"{typeof(UnitFactory).Name}: {cardData.unitName}의 Pool은 이미 존재합니다.");
                 return;
             }
+
             string path = $"Units/{cardData.prefabName}";
             Unit unit = AssetLoadManager.Instance.LoadAsset<Unit>(AssetLoadMode.Resources, path);
             unit.UnitStatus = new UnitData(cardData);

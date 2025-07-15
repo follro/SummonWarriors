@@ -92,7 +92,7 @@
     },
     {
       "id": "100000004",
-      "unitName": "Roge",
+      "unitName": "Rogue",
       "cost": "2",
       "unitType": "Ground",
       "attackType": "Melee",
@@ -107,14 +107,14 @@
       "speedType": "Fast",
       "spawnDleay": "1",
       "spawnCount": "2",
-      "prefabName": "Roge",
+      "prefabName": "Rogue",
       "iconPath": "none",
       "description\t": "0",
       "lifeTime": "0"
     },
     {
       "id": "100000005",
-      "unitName": "RogeHooded",
+      "unitName": "RogueHooded",
       "cost": "5",
       "unitType": "Ground",
       "attackType": "Range",
@@ -130,7 +130,7 @@
       "speedType": "Fast",
       "spawnDleay": "1",
       "spawnCount": "1",
-      "prefabName": "RogeHooded",
+      "prefabName": "RogueHooded",
       "iconPath": "none",
       "description\t": "0",
       "lifeTime": "0"
@@ -201,7 +201,7 @@
     },
     {
       "id": "100010003",
-      "unitName": "SkeletonRouge",
+      "unitName": "SkeletonRogue",
       "cost": "1",
       "unitType": "Ground",
       "attackType": "Melee",
@@ -216,7 +216,7 @@
       "speedType": "Fast",
       "spawnDleay": "1",
       "spawnCount": "3",
-      "prefabName": "SkeletonRouge",
+      "prefabName": "SkeletonRogue",
       "iconPath": "none",
       "description\t": "0",
       "lifeTime": "0"
