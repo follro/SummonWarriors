@@ -6,7 +6,7 @@ using static AssetLoadManager;
 
 namespace Unit.Spawning
 {
-    public class UnitFactory : Factory
+    public class UnitFactory : Factory<Unit>
     {
         private const string UnitPath = "Prefabs/Units";
         private const int TempObejctPoolSize = 10; 
@@ -23,14 +23,6 @@ namespace Unit.Spawning
         {
             //임시로 양 플레이어 덱에 든거 생성해놓기
             foreach (CardData cardData in GameDataManager.Instance.PlayersDeckData)
-            {
-                Debug.Log($"{UnitPath}/{cardData.prefabName}");
-                Unit unit = AssetLoadManager.Instance.LoadAsset<Unit>(AssetLoadMode.Resources, $"{UnitPath}/{cardData.prefabName}").GetComponent<Unit>();
-                ObjectPool<Unit> unitPool = new ObjectPool<Unit>(unit, this.transform, TempObejctPoolSize);
-                unitPoolsById.Add(cardData.id, unitPool);
-            }
-
-            foreach (CardData cardData in GameDataManager.Instance.PlayersDeckData)
                 AddUnitPools(cardData); 
         }
 
@@ -42,15 +34,16 @@ namespace Unit.Spawning
                 return;
             }
 
-            string path = $"Units/{cardData.prefabName}";
-            Unit unit = AssetLoadManager.Instance.LoadAsset<Unit>(AssetLoadMode.Resources, path);
+            string path = $"{UnitPath}/{cardData.prefabName}";
+            Unit unit = AssetLoadManager.Instance.LoadAsset<Unit>(AssetLoadMode.Resources, path).GetComponent<Unit>();
             unit.UnitStatus = new UnitData(cardData);
 
             unitPoolsById.Add(unit.UnitStatus.Id, new ObjectPool<Unit>(unit, this.transform, TempObejctPoolSize)); // 임시 오브젝트 풀
         }
         
-        public override IProduct GetProduct(Vector3 pos, int id = 0)
+        public override Unit GetProduct(Vector3 pos,int id = 0)
         {
+            //Unit의 데이터를 초기화 시켜주는게 필요함
             Unit unit = unitPoolsById[id].GetFromPool();
 
             unit.transform.position = pos;
@@ -58,9 +51,12 @@ namespace Unit.Spawning
             return unit;
         }
 
-        public void SpawnUnit()
+        public override void ReleaseProduct(Unit product, int id = 0)
         {
-            
+            //유닛의 데이터를 초기화 시키는게 필요함
+            unitPoolsById[id].ReturnToPool(product); 
         }
+
+     
     }
 }

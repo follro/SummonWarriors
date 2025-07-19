@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool<T> where T : MonoBehaviour
+public class ObjectPool<T> where T : MonoBehaviour, IProduct
 {
     private const int ExpansionDivisor = 2;
     private const int MinimumExpansionAmount = 10;
@@ -19,9 +19,8 @@ public class ObjectPool<T> where T : MonoBehaviour
         if (factory == null)
             Debug.LogError($"{typeof(ObjectPool<T>).Name}: 초기 오브젝트가 생성될 Pool의 부모 facotry를 상속 받는 Transform이 null 입니다");
 
-        pool = new Queue<T>();
+        Initialize();
         prefab = poolingTargetPrefab;
-        TotalPoolCapacity = 0;
         poolParent = new GameObject($"{typeof(T).Name}Pool: {poolingTargetPrefab.name}").transform;
         
         if(factory != null)
@@ -31,6 +30,12 @@ public class ObjectPool<T> where T : MonoBehaviour
 
         if (!CreateObject(poolInitialSize))
             Debug.LogError($"{typeof(ObjectPool<T>).Name}: 초기 오브젝트 ({poolInitialSize}개) 생성에 실패했습니다. 풀이 비정상적으로 초기화될 수 있습니다.");
+    }
+
+    public void Initialize()
+    {
+        pool = new Queue<T>();
+        TotalPoolCapacity = 0;
     }
 
     private bool CreateObject(int count)
@@ -86,7 +91,7 @@ public class ObjectPool<T> where T : MonoBehaviour
         obj.gameObject.SetActive(false);
         obj.transform.SetParent(poolParent);
         pool.Enqueue(obj);
-        
     }
 
+    
 }
