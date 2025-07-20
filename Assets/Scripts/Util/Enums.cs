@@ -73,6 +73,7 @@ namespace GameData
     public enum UnitBehaviorStateType
     {
         None = 0,
+        Idle, 
         Move,
         Attack,
         Dead,

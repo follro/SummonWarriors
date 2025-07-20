@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using Unity.VisualScripting;
-using UnityEngine;
+using GameData;
+
 
 namespace Unit.Behavior
 {
     public class UnitBehaviorStateMachine
     {
-        public IState CurrentState { get; private set; }
+        public UnitBehaviorStateType CurrentStateType { get; private set; }
+        private IState CurrentState { get { return unitBehaviorStates[(int)CurrentStateType]; } }
         private UnitBehaviorState[] unitBehaviorStates;
 
         public UnitBehaviorStateMachine(Unit unit)
@@ -19,6 +17,9 @@ namespace Unit.Behavior
             {
                 switch(i)
                 {
+                    case (int)GameData.UnitBehaviorStateType.Idle:
+                        unitBehaviorStates[i] = new IdleState(unit);
+                        break;
                     case (int)GameData.UnitBehaviorStateType.Move:
                         unitBehaviorStates[i] = new MovementState(unit);
                         break;
@@ -29,7 +30,7 @@ namespace Unit.Behavior
                         unitBehaviorStates[i] = new DeadState(unit); 
                         break;
                     default:
-                        unitBehaviorStates[i] = null;
+                        unitBehaviorStates[i] = new IdleState(unit);
                         break;
                 }
             }
@@ -42,18 +43,21 @@ namespace Unit.Behavior
 
             if (startingState != null)
             {
-                CurrentState = startingState;
+                CurrentStateType = startingStateType;
                 startingState.Enter();
             }
         }
 
         private IState StateTypeToState(GameData.UnitBehaviorStateType stateType, Unit unit = null)
         {
-            IState state = null;
-            if (unitBehaviorStates[(int)stateType] != null)
-                state = unitBehaviorStates[(int)stateType];
+            if ((int)stateType < 0 || (int)stateType >= unitBehaviorStates.Length)
+            {
+                UnityEngine.Debug.LogError($"{typeof(UnitBehaviorStateMachine).Name}: " +
+                    $"{stateType}의 인덱스가 맞지 않습니다.");
+                return null;
+            }
 
-            return state;
+            return unitBehaviorStates[(int)stateType];
         }
 
         public void TransitionTo(GameData.UnitBehaviorStateType nextStateType)
@@ -63,7 +67,7 @@ namespace Unit.Behavior
             if (nextState != null && nextState != CurrentState)
             {
                 CurrentState.Exit();
-                CurrentState = nextState;
+                CurrentStateType = nextStateType;
                 nextState.Enter();
             }
         }

@@ -8,8 +8,7 @@ namespace Unit
     public class Unit : MonoBehaviour, IProduct
     {
         public UnitData UnitStatus { get; set; } //ÀÓ½Ã À¯´Ö ½ºÅÝ
-        public string ProductName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
+        public GameData.UnitBehaviorStateType CurrentUnitState { get { return stateMachine.CurrentStateType; } }
         private UnitBehaviorStateMachine stateMachine;
 
         #region Unity Lifecycle Methods
@@ -35,5 +34,7 @@ namespace Unit
         {
             stateMachine = new UnitBehaviorStateMachine(this);
         }
+
+        
     }
 }

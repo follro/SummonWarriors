@@ -8,16 +8,23 @@ public class TestAggro : MonoBehaviour
 {
     //private UnitData unitData;
     private NavMeshAgent navMeshAgent;
-    public Transform target;
+    private Unit.UnitFinder unitFinder;
+    public LayerMask findedLayer;
     void Start()
     {
-        //unitData = GetComponent<Unit.Unit>().UnitStatus;
-        navMeshAgent =GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.stoppingDistance = 2;
+        unitFinder = new Unit.UnitFinder();
     }
 
     void Update()
     {
-        navMeshAgent.SetDestination(target.position);
+        Unit.Unit target = unitFinder.FindNearUnit(this.transform.position, 5f, findedLayer, this.transform);
+        if (target != null) 
+            navMeshAgent.SetDestination(target.transform.position);
+        else
+        {
+            Debug.Log("비어있음");
+        }
     }
 }
