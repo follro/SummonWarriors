@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SkeletonRogue
+  m_Controller: {fileID: 9100000, guid: 8dd7c2e3028cccc4ab7b5e41b1f82bd1, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7624655660056751624, guid: 9c6ebc79413ae7942a2b798aa1f7130a,
+      type: 3}
+    m_OverrideClip: {fileID: 2217827441429648498, guid: 28f50c3a8c98c7c4288dc2d34e73714a,
+      type: 3}
+  - m_OriginalClip: {fileID: -3100369314251171874, guid: 9c6ebc79413ae7942a2b798aa1f7130a,
+      type: 3}
+    m_OverrideClip: {fileID: -3100369314251171874, guid: 28f50c3a8c98c7c4288dc2d34e73714a,
+      type: 3}
+  - m_OriginalClip: {fileID: 3174661419259135242, guid: 9c6ebc79413ae7942a2b798aa1f7130a,
+      type: 3}
+    m_OverrideClip: {fileID: -7800337380646078255, guid: 28f50c3a8c98c7c4288dc2d34e73714a,
+      type: 3}
