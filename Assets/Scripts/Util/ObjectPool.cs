@@ -32,19 +32,20 @@ public class ObjectPool<T> where T : MonoBehaviour, IProduct
             Debug.LogError($"{typeof(ObjectPool<T>).Name}: 초기 오브젝트 ({poolInitialSize}개) 생성에 실패했습니다. 풀이 비정상적으로 초기화될 수 있습니다.");
     }
 
-    public void Initialize()
+    private void Initialize()
     {
         pool = new Queue<T>();
         TotalPoolCapacity = 0;
     }
 
-    private bool CreateObject(int count)
+    public bool CreateObject(int count)
     {
         if (count <= 0)
         {
             Debug.LogWarning($"{typeof(ObjectPool<T>).Name}: 생성할 오브젝트 개수가 0이하여서 아무것도 생성하지 않습니다. (Count: {count})");
             return false;
         }
+
         for (int i = 0; i < count; i++)
         {
             T obj = GameObject.Instantiate(prefab, poolParent);

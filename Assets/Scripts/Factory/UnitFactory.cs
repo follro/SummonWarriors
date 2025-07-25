@@ -30,7 +30,8 @@ namespace Unit.Spawning
         {
             if (unitPoolsById.ContainsKey(cardData.id))
             {
-                Debug.LogWarning($"{typeof(UnitFactory).Name}: {cardData.unitName}의 Pool은 이미 존재합니다.");
+                Debug.LogWarning($"{typeof(UnitFactory).Name}: {cardData.unitName}의 Pool은 이미 존재합니다. 유닛 풀을 추가합니다");
+                unitPoolsById[cardData.id].CreateObject(TempObejctPoolSize);
                 return;
             }
 
