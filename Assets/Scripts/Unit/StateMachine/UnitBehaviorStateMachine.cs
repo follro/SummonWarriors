@@ -37,6 +37,7 @@ namespace Unit.Behavior
 
             Initialize(GameData.UnitBehaviorStateType.Move);
         }
+
         public void Initialize(GameData.UnitBehaviorStateType startingStateType)
         {
             IState startingState = StateTypeToState(startingStateType);
@@ -47,7 +48,6 @@ namespace Unit.Behavior
                 startingState.Enter();
             }
         }
-
         private IState StateTypeToState(GameData.UnitBehaviorStateType stateType, Unit unit = null)
         {
             if ((int)stateType < 0 || (int)stateType >= unitBehaviorStates.Length)

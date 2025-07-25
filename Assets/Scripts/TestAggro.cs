@@ -19,7 +19,7 @@ public class TestAggro : MonoBehaviour
 
     void Update()
     {
-        Unit.Unit target = unitFinder.FindNearUnit(this.transform.position, 5f, findedLayer, this.transform);
+        Unit.Unit target = unitFinder.FindNearUnit(this.transform.position, 20f, findedLayer, this.transform);
         if (target != null) 
             navMeshAgent.SetDestination(target.transform.position);
         else
